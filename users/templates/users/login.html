@@ -1,0 +1,10 @@
+{% extends 'blog/layout.html' %}
+
+{% block content %}
+    <h1>Log In</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Log In</button>
+    </form>
+{% endblock %}

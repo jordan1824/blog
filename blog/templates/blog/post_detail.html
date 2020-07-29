@@ -1,0 +1,9 @@
+{% extends 'blog/layout.html' %}
+
+{% block content %}
+    <h2>{{ object.title }}</h2>
+    <small>By {{ post.author.get_full_name }} ({{ post.author.username }})</small>
+    <br>
+    <small>Last Edited: {{ object.last_modified }}</small>
+    <p>{{ object.content }}</p>
+{% endblock %}

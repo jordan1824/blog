@@ -1,0 +1,12 @@
+{% extends 'blog/layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h1>Update Your Profile</h1>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ user_form|crispy }}
+    {{ profile_form|crispy }}
+    <button type='submit'>Update Profile</button>
+</form>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "blog/layout.html" %}
+
+{% block content %}
+    <h1>Posts</h1>
+    {% for post in object_list %}
+        <article>
+            <h2>{{post.title}} <a href="#">Like Post</a></h2>
+            <small>By <a href="{% url 'user-posts' post.author.username %}">{{ post.author.get_full_name }} | {{ post.author.username }}</a></small>
+            <p>{{post.content|truncatewords:'50'}}</p>
+            <small>Last modified on {{post.last_modified|date:'F d, Y'}} at {{post.last_modified|date:'P'}}</small>
+            <a href="{% url 'post-detail' post.id %}">View Full Post</a>
+        </article>
+    {% endfor %}
+    {% if is_paginated %}
+        <div class="pages">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ 1 }}">First</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
+                    <a href="?page={{ num }}">{{num}}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a href="?page={{ num }}">{{num}}</a>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}
