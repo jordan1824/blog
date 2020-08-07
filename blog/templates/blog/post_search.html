@@ -1,0 +1,61 @@
+{% extends 'blog/layout.html' %}
+{% block content %}
+
+<h3 class='text-center text-light mt-5 page-title'>Search For A Specific Topic</h3>
+
+    <div class='searchbar text-center mb-5'>
+        <form action='/post/search/' method="POST">
+            {% csrf_token %}
+            <div class='w-50 mx-auto'>
+                <input type='text' class='w-75 search-bar' name='topic' placeholder='Search Post Topic' autocomplete='off'>
+                <button type='submit' class='search-btn'><i class="fa fa-search mx-3"></i></button>
+            </div>
+        </form>
+    </div>
+
+{% for post in result %}
+<div class='row no-gutters justify-content-center'>
+    <div class='col-lg-6 col-md-9 col-sm-11'>
+        <div class="card mx-auto mb-4 border home-post border-dark rounded-bottom text-center bg-light">
+          <div class="card-body pt-3 pb-2">
+
+            <div class="dropdown home-post-dropdown">
+              <a class="btn bg-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                ...
+              </a>
+              <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="dropdownMenu1">
+                <a class="dropdown-item" href="{% url 'post-detail' post.id %}">View Post</a>
+                {% if post.author == user %}
+                  <a class="dropdown-item" href="{% url 'update-post' post.id %}">Edit Post</a>
+                  <a class="dropdown-item" href="{% url 'delete-post' post.id %}">Delete Post</a>
+                {% endif %}
+              </div>
+            </div>
+
+            <h4 class="card-title">{{post.title|title}}</h4>
+            <h6 class="card-subtitle text-muted mb-1">Written by: <a class='text-muted' href="{% url 'user-posts' post.author.username %}">{{ post.author.get_full_name|title }}</a></h6>
+            <form action="{% url 'save-post' post.id %}">
+              <input type='hidden' name='url' value='{{request.path}}'>
+              <button type=submit class="btn btn-link py-0 card-link">Save Post</button>
+            </form>
+            <p class="card-text mt-2 px-5">{{post.content|truncatechars:200}}</p>
+            {% if post.content|length > 200 %}
+              <a href="{% url 'post-detail' post.id %}" class="card-link btn btn-outline-primary py-1 px-2">View Full Post</a>
+            {% endif %}
+          </div>
+          <div class="card-footer bg-light text-muted mt-1 p-2">
+            <small>Last modified on {{post.last_modified|date:'F d, Y'}} at {{post.last_modified|date:'P'}}</small>
+          </div>
+        </div>
+    </div>
+</div>
+{% empty %}
+    {% if note %}
+        <h5 class='text-center text-white mt-5'>{{note}}</h5>
+    {% endif %}
+{% endfor %}
+<div class='text-center pt-3 pb-5'>
+    <a href="{% url 'blog-home' %}" class='btn btn-outline-light'>Return Home</a>
+</div>
+
+{% endblock %}

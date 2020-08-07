@@ -1,1 +1,410 @@
+body {
+    background-image: url('https://cdn.pixabay.com/photo/2014/06/16/23/39/black-370118_960_720.png');
+    width: 100%;
+    min-height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+small {
+    font-size: 0.9rem;
+}
 
+.alert {
+    border-radius: 0;
+}
+
+.card-text {
+    white-space: pre-wrap;
+}
+
+/*  ==== NAVBAR ====  */
+
+.navbar-brand {
+    font-family: 'Lobster', cursive;
+    font-size: 1.8rem;
+    width: auto;
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.navbar-nav {
+    padding: 0rem 4%;
+}
+.navbar-dark .navbar-nav .nav-link {
+    transition-duration: 0.5s;
+}
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: white;
+}
+.nav-hr {
+    background: white;
+}
+
+/*  ==== INDEX ====  */
+
+/* Button Sidebar */
+.btn-group-vertical {
+    margin: 0 auto;
+    text-align: center;
+    display: block;
+}
+.btn-group-vertical button:hover {
+    background: #F7F7F7;
+    color: #047afb;
+}
+.savedposts a {
+    white-space: normal;
+}
+.savedposts a:hover {
+    background: #F8F9FA!important;
+    color: #047AFB!important;
+}
+
+/* Center Post Section */
+.icon-list a {
+    font-size: 1.8rem;
+}
+.icon-list .middle-icon {
+    font-size: 1.9rem;
+    position: relative;
+    top: 3px
+}
+.tooltip-inner {
+  border: 1px solid white !important;
+}
+.home-post {
+    width: 95%;
+}
+.home-post-dropdown {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+.dropdown-menu {
+    border: none;
+    background: #F8F9FA;
+    box-shadow: 1px 1px 10px #343A40;
+}
+.dropdown-item:hover {
+    background: #047afb;
+    color: white;
+}
+.btn-outline-primary {
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+/* ==== DELETE POST PAGE ==== */
+
+.delete-h2 {
+    margin: 5rem auto 2rem;
+}
+.delete-btn {
+    display: block;
+    font-size: 19px;
+}
+
+/* ==== POST DETAIL PAGE ==== */
+
+.detail-post {
+    width: 95%;
+}
+.detail-post-dropdown {
+    position: absolute;
+    right: 6px;
+    top: 3px;
+}
+.detail-post-dropdown>a {
+    background: #262B2F;
+    font-size: 1.3rem;
+}
+.detail-post-header {
+    background: #262B2F;
+}
+.comment-img {
+    width: 70px;
+    height: 70px;
+}
+.comment {
+    padding-left: 10px !important;
+}
+.comment p {
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+}
+textarea {
+    max-height: 200px;
+    min-height: 50px;
+    white-space: pre-wrap;
+}
+.x-button {
+    font-size: 1.5rem;
+}
+
+/* ==== CREATE POST PAGE & UPDATE POST PAGE ==== */
+
+.create-form {
+    padding: 2rem 3rem;
+    margin: 4rem 0 3rem;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
+    width: auto;
+    height: auto;
+}
+.create-form div {
+    width: 30rem;
+}
+.publish-btn {
+    display: block;
+    font-size: 18px;
+}
+
+/* ==== PROFILE PAGE & USERS POSTS PAGE ==== */
+
+.profile-form {
+    padding: 2rem 3rem;
+    margin: 4rem 0 3rem;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url(../../media/form-image.png);
+    width: auto;
+    height: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.inner-profile-form {
+    width: 26rem;
+}
+.profile-image {
+    width: 230px;
+    height: 230px;
+}
+
+/* ======= USERS LIST & USERS SEARCH RESULTS PAGE ========= */
+
+.search-bar {
+    border-radius: 25px;
+    position: relative;
+    left: 30px;
+    margin-top: 20px;
+    padding: 9px 20px;
+    background: #F8F9FA;
+}
+.search-bar:focus, .search-btn:focus {
+    outline: none!important;
+}
+.search-btn {
+    position: relative;
+    background: none;
+    right: 30px;
+    border: none;
+    cursor: pointer;
+}
+.searchbar .fa-search {
+    font-size: 20px!important;
+}
+.user-img-div {
+    height: 230px;
+    width: 230px;
+}
+.user-img-div img {
+    height: 230px;
+    width: 100%;
+}
+.user-info-div {
+    height: 230px;
+}
+.user-info {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-right: 20px;
+}
+
+/* ======= POST SEARCH PAGE ========= */
+
+            /* Empty */
+
+/* ======= SAVED POSTS PAGE ========= */
+
+.saved-post-p {
+    width: 40%;
+}
+
+/* ======= LOGIN PAGE ========= */
+
+.login-h1 {
+    margin: 5rem auto 2rem;
+}
+.login-form {
+    width: 20rem !important;
+}
+
+/* ======= LOGOUT PAGE ========= */
+
+.logout-btn {
+    font-size: 21px;
+}
+
+/* ======= REGISTER PAGE ========= */
+
+.register-form {
+    width: 26rem;
+}
+
+@media (max-width: 950px) {
+    .comment-section {
+        width: 100% !important;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+}
+
+
+@media (max-width: 767.8px) {
+    .login-h1 {
+        margin: 3rem auto 2rem;
+        font-size: 1.9rem;
+    }
+    .register-form {
+        width:75%;
+    }
+    .logout-btn {
+        font-size: 16px;
+    }
+    .profile-form {
+    width: 95%;
+    padding-left: 10px;
+    padding-right: 10px;
+    }
+    .inner-profile-form {
+        width: auto;
+    }
+    .bio {
+        font-size: 0.9em;
+        width: 70%;
+        margin: 10px auto;
+    }
+    .profile-image {
+        width: 180px;
+        height: 180px;
+    }
+    .p-bottom {
+        padding-bottom: 0px !important;
+    }
+    .card-title {
+        font-size: 1.3rem;
+    }
+    .card-text {
+        font-size: 0.9rem;
+        margin-top: 4px !important;
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+    .text-muted {
+        font-size: 0.8rem;
+        margin-bottom: 4px !important;
+    }
+    .card-link {
+        font-size: 0.8rem;
+    }
+    .alert {
+        font-size: 0.8rem;
+    }
+    .delete-h2 {
+        font-size: 1.5rem;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .delete-btn {
+        font-size: 1rem;
+        margin-top: 0px !important;
+    }
+    .detail-post-header {
+        font-size: 1.3rem;
+    }
+    .detail-post-dropdown {
+        top: 0px;
+    }
+    .detail-card-body {
+        padding-top: 10px !important;
+    }
+    .detail-card-body .card-title>a, .detail-card-body .card-title {
+        font-size: 0.9rem;
+        margin-bottom: 7px!important;
+    }
+    .create-form {
+        width: 95%;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .create-form div {
+        width: auto;
+    }
+    .searchbar div {
+        width: 100% !important;
+    }
+    .page-title {
+        font-size: 1.4rem;
+    }
+    .saved-post-p {
+        font-size: 0.9rem;
+        width: 80%;
+    }
+    .user-img-div {
+    height: auto;
+    width: 100%;
+    }
+    .user-img-div img {
+        height: 160px;
+    }
+    .user-info-div {
+        height: auto;
+    }
+    .user-info {
+        width: 100%;
+    }
+    .user-info h3 {
+        font-size: 1.3rem;
+    }
+    .user-info p, .user-info a {
+        font-size: 0.8rem;
+        margin-bottom: 4px;
+    }
+    .username {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .user-info h3 {
+        font-size: 1.1rem;
+    }
+    .user-info p, .user-info a {
+        font-size: 0.7rem;
+    }
+    .bio {
+        width: 90%;
+    }
+    .comment-img {
+        width: 60px;
+        height: 60px;
+    }
+    .comment {
+        padding-left: 10px !important;
+    }
+    .comment p, .comment small {
+        font-size: 0.8rem;
+        padding-right: 0px !important;
+    }
+    .comment .home-post-dropdown {
+        top: -18px;
+        right: -35px;
+    }
+}

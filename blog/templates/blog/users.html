@@ -1,0 +1,48 @@
+{% extends 'blog/layout.html' %}
+{% block content %}
+    <div class='searchbar text-center'>
+        <form action='/search/'>
+            <div class='w-50 mx-auto'>
+                <input type='text' class='w-75 search-bar' name='q' placeholder='Search Users Name' autocomplete='off'>
+                <button type='submit' class='search-btn'><i class="fa fa-search mx-3"></i></button>
+            </div>
+        </form>
+    </div>
+    {% for person in object_list %}
+        <div class='row no-gutters my-md-5 my-4 text-dark justify-content-center'>
+            <div class='col-lg-2 col-sm-4 col-4 text-center user-img-div'>
+                <img src="{{ person.profile.image.url }}" class='p-1 bg-light' alt="User Image">
+            </div>
+            <div class='col-lg-4 col-sm-6 col-7 p-3 bg-light user-info-div'>
+                <div class='user-info'>
+                    <h3>{{person.first_name|title}} {{person.last_name|title}}</h3>
+                    <p>{{person.profile.bio}}</p>
+                    {% if person.post_set.all %}
+                        <a href="{% url 'user-posts' person.username %}">View {{person.first_name|title}}'s Posts</a>
+                    {% else %}
+                        <p>{{person.first_name|title}} does not have any posts.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% if is_paginated %}
+        <div class="pages text-center pb-5 pt-3">
+            {% if page_obj.has_previous %}
+                <a class='btn btn-outline-primary' href="?page={{ 1 }}">First</a>
+                <a class='btn btn-outline-primary' href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
+                  <a class='btn btn-primary' href="?page={{ num }}">{{num}}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                  <a class='btn btn-outline-primary' href="?page={{ num }}">{{num}}</a>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <a class='btn btn-outline-primary' href="?page={{ page_obj.next_page_number }}">Next</a>
+                <a class='btn btn-outline-primary' href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}

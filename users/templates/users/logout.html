@@ -1,6 +1,8 @@
 {% extends 'blog/layout.html' %}
 
 {% block content %}
-    <h1>You have been logged out</h1>
-    <a href="{% url 'login' %}">Log In Again</a>
+    <h2 class='text-light mt-5 mb-3 text-center page-title'>You have been logged out.</h2>
+    <div class='text-center'>
+        <a href="{% url 'login' %}" class='logout-btn'>Log In Again</a>
+    </div>
 {% endblock %}

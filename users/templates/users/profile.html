@@ -2,11 +2,26 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h1>Update Your Profile</h1>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ user_form|crispy }}
-    {{ profile_form|crispy }}
-    <button type='submit'>Update Profile</button>
-</form>
+<div class='row no-gutters my-2 text-white pb-5 pt-4 text-center justify-content-center border-bottom border-light'>
+    <div class='col-lg-2 col-md-3 my-auto mx-4'>
+        <img src="{{ user.profile.image.url }}" alt="User Image" class='rounded-circle img-thumbnail profile-image'>
+    </div>
+    <div class='col-md-3 py-3 my-auto text-md-left px-5 px-md-0 p-bottom'>
+        <h3>{{ user.first_name|title }} {{ user.last_name|title }}</h3>
+        <h5 class='text-muted username'>Username: {{ user.username }}</h5>
+        <p class='bio'>{{ user.profile.bio }}</p>
+        <a href="{% url 'user-posts' user.username %}">View Your Posts</a>
+    </div>
+</div>
+<div class='border border-light d-inline-block profile-form'>
+    <h3 class='text-white text-center mb-4 py-2'>Update Your Profile</h3>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class='form-group text-white mx-auto inner-profile-form''>
+            {{ user_form|crispy }}
+            {{ profile_form|crispy }}
+        </div>
+        <button type='submit' class='btn btn-primary mx-auto publish-btn mt-5 mb-3 px-5'>Update Profile</button>
+    </form>
+</div>
 {% endblock %}

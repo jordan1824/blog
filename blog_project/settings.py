@@ -129,3 +129,10 @@ LOGIN_REDIRECT_URL = 'blog-home'
 LOGIN_URL = '/login'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('USER_NAME')
+EMAIL_HOST_PASSWORD = os.environ.get('USER_PASS')
+EMAIL_PORT = 587
+ACCOUNT_EMAIL_VERIFICATION = 'none'

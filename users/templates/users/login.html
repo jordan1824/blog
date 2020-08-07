@@ -1,10 +1,17 @@
 {% extends 'blog/layout.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-    <h1>Log In</h1>
+    <h1 class='text-white text-center login-h1'>Log In</h1>
     <form method="POST">
         {% csrf_token %}
-        {{ form }}
-        <button type="submit">Log In</button>
+        <div class='form-group mx-auto text-white login-form'>
+            {{ form|crispy }}
+            <a href="{% url 'password_reset' %}">Forgot Your Password?</a>
+            <button type="submit" class='btn btn-primary mx-auto publish-btn mb-3 mt-4 px-5'>Login</button>
+            <div class='text-center'>
+                <a href="{% url 'register' %}" class='text-light'>Create New Account</a>
+            </div>
+        </div>
     </form>
 {% endblock %}

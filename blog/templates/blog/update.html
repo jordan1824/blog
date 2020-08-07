@@ -1,0 +1,18 @@
+{% extends 'blog/layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class='d-inline-block create-form my-0 pt-4'>
+    <h3 class='text-white text-center mb-4 py-0'>Edit Post</h3>
+    <form method="POST" class='border p-4' enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class='form-group text-white mx-auto'>
+            {{ form|crispy }}
+        </div>
+        <button type='submit' class='btn btn-primary mx-auto publish-btn mt-4 px-3 py-1'>Update Post</button>
+    </form>
+</div>
+<div class='text-center mb-4'>
+    <a href="{% url 'blog-home' %}" class='text-light'>Return Home</a>
+</div>
+{% endblock %}

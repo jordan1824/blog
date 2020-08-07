@@ -1,33 +1,93 @@
 {% extends "blog/layout.html" %}
 
 {% block content %}
-    <h1>{{ object_list.first.author.username|title }}'s Posts</h1>
-    {% for post in object_list %}
-        <article>
-            <h2>{{post.title}} <a href="#">Like Post</a></h2>
-            <small>By {{ post.author.get_full_name }} | {{ post.author.username }}</small>
-            <p>{{post.content|truncatewords:'50'}}</p>
-            <small>Last modified on {{post.last_modified|date:'F d, Y'}} at {{post.last_modified|date:'P'}}</small>
-            <a href="{% url 'post-detail' post.id %}">Read More</a>
-        </article>
-    {% endfor %}
-    {% if is_paginated %}
-        <div class="pages">
-            {% if page_obj.has_previous %}
-                <a href="?page={{ 1 }}">First</a>
-                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-            {% endif %}
-            {% for num in page_obj.paginator.page_range %}
-                {% if num == page_obj.number %}
-                    <a href="?page={{ num }}">{{num}}</a>
-                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                <a href="?page={{ num }}">{{num}}</a>
-                {% endif %}
-            {% endfor %}
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">Next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-            {% endif %}
+    {% if view.kwargs.username != user.username %}
+        <div class='row no-gutters my-2 text-white pb-5 pt-4 text-center justify-content-center border-bottom border-light'>
+            <div class='col-lg-2 col-md-3 my-auto mx-4'>
+                <img src="{{ object_list.first.author.profile.image.url }}" alt="User Image" class='rounded-circle img-thumbnail profile-image'>
+            </div>
+            <div class='col-md-3 py-3 my-auto text-md-left px-5 p-bottom px-md-0'>
+                <h3>{{ object_list.first.author.first_name|title }} {{ object_list.first.author.last_name|title }}</h3>
+                <p class='bio'>{{ object_list.first.author.profile.bio }}</p>
+            </div>
+        </div>
+    {% else %}
+        <div class='row no-gutters my-2 text-white pb-5 pt-4 text-center justify-content-center border-bottom border-light'>
+            <div class='col-lg-2 col-md-3 my-auto mx-4'>
+                <img src="{{ user.profile.image.url }}" alt="User Image" class='rounded-circle img-thumbnail profile-image'>
+            </div>
+            <div class='col-md-3 py-3 my-auto text-md-left px-5 p-bottom px-md-0'>
+                <h3>{{ user.first_name|title }} {{ user.last_name|title }}</h3>
+                <p class='bio'>{{ user.profile.bio }}</p>
+            </div>
         </div>
     {% endif %}
+    <div class='row no-gutters justify-content-center'>
+        <div class='col-lg-8 col-sm-10'>
+            <div class='text-center text-white'>
+                {% if view.kwargs.username == user.username %}
+                    <h3 class='m-4'>Your Posts:</h3>
+                {% else %}
+                    <h3 class='m-4'>{{ object_list.first.author.first_name|title }}'s Posts</h3>
+                {% endif %}
+            </div>
+            {% for post in object_list %}
+                <div class="card mx-auto mb-4 text-center bg-light border home-post">
+                  <div class="card-body">
+                    {% if post.author == user %}
+                        <div class="dropdown home-post-dropdown">
+                          <a class="btn bg-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            ...
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="dropdownMenu1">
+                              <a class="dropdown-item" href="{% url 'update-post' post.id %}">Edit Post</a>
+                              <a class="dropdown-item" href="{% url 'delete-post' post.id %}">Delete Post</a>
+                          </div>
+                        </div>
+                    {% endif %}
+
+                    <h4 class="card-title text-dark">{{post.title}}</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">Last modified on {{post.last_modified|date:'F d, Y'}} at {{post.last_modified|date:'P'}}</h6>
+                    <form action="{% url 'save-post' post.id %}">
+                      <input type='hidden' name='url' value='{{request.path}}'>
+                      <button type=submit class="btn btn-link py-0 card-link">Save Post</button>
+                    </form>
+                    <p class="card-text px-3 mt-2">{{post.content|truncatechars:250}}</p>
+                    {% if post.content|length > 250 %}
+                      <a href="{% url 'post-detail' post.id %}" class="card-link btn btn-outline-primary py-1 px-2">View Full Post</a>
+                    {% endif %}
+                  </div>
+                </div>
+            {% empty %}
+                {% if view.kwargs.username == user.username %}
+                    <p class='text-center text-white'>You do not have any posts.</p>
+                    <p class='text-center'><a href="{% url 'create-post' %}">Create New Post</a></p>
+                {% else %}
+                    <p class='text-center text-white'>This user does not have any posts.</p>
+                {% endif %}
+            {% endfor %}
+            <div class='text-center pb-4'>
+                <a href="{% url 'blog-home' %}" class='text-light'>Return Home</a>
+            </div>
+            {% if is_paginated %}
+                <div class="pages text-center pb-5 pt-3">
+                    {% if page_obj.has_previous %}
+                        <a class='btn btn-outline-primary' href="?page={{ 1 }}">First</a>
+                        <a class='btn btn-outline-primary' href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    {% endif %}
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if num == page_obj.number %}
+                          <a class='btn btn-primary' href="?page={{ num }}">{{num}}</a>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                          <a class='btn btn-outline-primary' href="?page={{ num }}">{{num}}</a>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <a class='btn btn-outline-primary' href="?page={{ page_obj.next_page_number }}">Next</a>
+                        <a class='btn btn-outline-primary' href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

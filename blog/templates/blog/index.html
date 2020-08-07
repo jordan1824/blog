@@ -1,33 +1,103 @@
 {% extends "blog/layout.html" %}
 
 {% block content %}
-    <h1>Posts</h1>
-    {% for post in object_list %}
-        <article>
-            <h2>{{post.title}} <a href="#">Like Post</a></h2>
-            <small>By <a href="{% url 'user-posts' post.author.username %}">{{ post.author.get_full_name }} | {{ post.author.username }}</a></small>
-            <p>{{post.content|truncatewords:'50'}}</p>
-            <small>Last modified on {{post.last_modified|date:'F d, Y'}} at {{post.last_modified|date:'P'}}</small>
-            <a href="{% url 'post-detail' post.id %}">View Full Post</a>
-        </article>
-    {% endfor %}
-    {% if is_paginated %}
-        <div class="pages">
-            {% if page_obj.has_previous %}
-                <a href="?page={{ 1 }}">First</a>
-                <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    <div class='row no-gutters justify-content-center'>
+        <div class='col-lg-3 savedposts d-none d-lg-block'>
+          <br><br>
+            <div class="btn-group-vertical w-75 text-center text-white border border-light">
+            {% if saved_posts %}
+              <div class='p-3 bg-primary'><h5 class='mb-0'>Saved Posts</h5></div>
+            {% else %}
+              <div class='p-3'><h5 class='mb-0'>Saved Posts</h5></div>
             {% endif %}
-            {% for num in page_obj.paginator.page_range %}
-                {% if num == page_obj.number %}
-                    <a href="?page={{ num }}">{{num}}</a>
-                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                <a href="?page={{ num }}">{{num}}</a>
-                {% endif %}
+              {% for save in saved_posts %}
+                <a type='button' href="{% url 'post-detail' save.saved_post.id %}" class='btn btn-primary border border-dark'>{{save.saved_post.title}}</a>
+              {% empty %}
+                <p class='text-dark bg-light mt-1 mb-0 p-2'>You do not have any saved posts.<br><br>Saved posts will get stored here, so you can read through them when you have the time.</p>
+              {% endfor %}
+            </div>
+        </div>
+        <div class='col-lg-6 col-md-9 col-sm-11'>
+          <div class='text-center text-primary mb-4 icon-list'>
+              <a data-toggle="tooltip" data-placement="top" title="Saved Posts" href="{% url 'saved-posts' %}"><i class="fa fa-cubes mx-3"></i></a>
+              <a data-toggle="tooltip" data-placement="top" title="Search" href='{% url "post-search" %}'><i class="fa fa-search mx-3"></i></a>
+              <a class='text-light' data-toggle="tooltip" data-placement="top" title="Create Post" href='{% url "create-post" %}'><i class="fa fa-edit mx-3 middle-icon"></i></a>
+              <a data-toggle="tooltip" data-placement="top" title="View Your Posts" href='{% url "user-posts" user.username %}'><i class="fa fa-user mx-3"></i></a>
+              <a data-toggle="tooltip" data-placement="top" title="View Users" href='{% url "users-list" %}'><i class="fa fa-users mx-3"></i></a>
+          </div>
+            {% for post in object_list %}
+                <div class="card home-post mx-auto mb-4 border border-dark rounded-bottom text-center bg-light"">
+                  <div class="card-body pt-3 pb-2">
+
+                    <div class="dropdown home-post-dropdown">
+                      <a class="btn bg-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        ...
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="dropdownMenu1">
+                        <a class="dropdown-item" href="{% url 'post-detail' post.id %}">View Post</a>
+                        {% if post.author == user %}
+                          <a class="dropdown-item" href="{% url 'update-post' post.id %}">Edit Post</a>
+                          <a class="dropdown-item" href="{% url 'delete-post' post.id %}">Delete Post</a>
+                        {% endif %}
+                      </div>
+                    </div>
+
+                    <h4 class="card-title">{{post.title|title}}</h4>
+                    <h6 class="card-subtitle text-muted mb-1">Written by: <a class='text-muted' href="{% url 'user-posts' post.author.username %}">{{ post.author.get_full_name|title }}</a></h6>
+                    <form action="{% url 'save-post' post.id %}">
+                      <input type='hidden' name='url' value='{{request.path}}'>
+                      <button type=submit class="btn btn-link py-0 card-link">Save Post</button>
+                    </form>
+                    <p class="card-text mt-2 px-5">{{post.content|truncatechars:200}}</p>
+                    {% if post.content|length > 200 %}
+                      <a href="{% url 'post-detail' post.id %}" class="card-link btn btn-outline-primary py-1 px-2">View Full Post</a>
+                    {% endif %}
+                  </div>
+                  <div class="card-footer bg-light text-muted mt-1 p-2">
+                    <small>Last modified on {{post.last_modified|date:'F d, Y'}} at {{post.last_modified|date:'P'}}</small>
+                  </div>
+                </div>
             {% endfor %}
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">Next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            {% if is_paginated %}
+                <div class="pages text-center pb-5 pt-3">
+                    {% if page_obj.has_previous %}
+                        <a class='btn btn-outline-primary' href="?page={{ 1 }}">First</a>
+                        <a class='btn btn-outline-primary' href="?page={{ page_obj.previous_page_number }}">Prev.</a>
+                    {% endif %}
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if num == page_obj.number %}
+                          <a class='btn btn-primary' href="?page={{ num }}">{{num}}</a>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                          <a class='btn btn-outline-primary' href="?page={{ num }}">{{num}}</a>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <a class='btn btn-outline-primary' href="?page={{ page_obj.next_page_number }}">Next</a>
+                        <a class='btn btn-outline-primary' href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                    {% endif %}
+                </div>
             {% endif %}
         </div>
-    {% endif %}
+        <div class='col-lg-3 text-center text-white d-none d-lg-block'>
+          <br><br>
+            <div class="card bg-primary w-75 mb-3 mx-auto border border-light rounded-0">
+              <div class="card-body">
+                <h5 class="card-title">Title Card One</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa adipisci eaque nihil repudiandae quo.</p>
+              </div>
+            </div>
+            <div class="card bg-light text-dark w-75 mb-3 mx-auto border border-white rounded-0">
+              <div class="card-body">
+                <h5 class="card-title">Title Card Two</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa adipisci eaque nihil repudiandae quo.</p>
+              </div>
+            </div>
+            <div class="card bg-dark w-75 mb-3 mx-auto border border-white rounded-0">
+              <div class="card-body">
+                <h5 class="card-title">Title Card Three</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa adipisci eaque nihil repudiandae quo.</p>
+              </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
