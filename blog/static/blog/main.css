@@ -6,6 +6,20 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
 }
+.alert-block {
+    background: #007bff;
+    color: white;
+    border: 1px solid white;
+}
+.alert-block ul {
+    list-style: none !important;
+    padding: 0;
+}
+.alert-block ul li {
+    font-size: 0.75rem;
+    text-align: center;
+}
+
 small {
     font-size: 0.9rem;
 }
