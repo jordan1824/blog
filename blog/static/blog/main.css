@@ -1,3 +1,11 @@
+:root {
+    --primary-color: #375670;
+    --secondary-color: #BBD0E0;
+    --light-color: #f8f9fa;
+    --btn-color: #CD9245;
+    --border-color: #647E91;
+  }
+
 body {
     background-image: url('https://cdn.pixabay.com/photo/2014/06/16/23/39/black-370118_960_720.png');
     width: 100%;
@@ -412,9 +420,161 @@ textarea {
 
 /* ======= REGISTER PAGE ========= */
 
-.register-form {
-    width: 26rem;
-}
+  .register-block {
+    max-width: 600px;
+    width: 90%;
+    background: var(--primary-color);
+    margin: 30px auto 40px;
+    padding: 0px 10px 60px;
+    border: 5px solid var(--border-color);
+    color: white;
+  }
+  .register-title {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 3rem;
+    padding: 10px;
+    margin-bottom: 0px;
+  }
+  .register-form {
+    width: 80%;
+    margin: auto;
+  }
+  .form-field-container {
+    position: relative;
+    transform: scaleY(0.9);
+  }
+  .form-label {
+    padding: 10px 0 0;
+    margin: 0px 0 15px;
+  }
+  .register-field {
+    width: 100%;
+    margin: 10px auto 0px;
+    display: block;
+    height: 44px;
+    border-radius: 5px;
+    font-size: 1rem;
+    padding: 5px 15px;
+    border: none;
+    position: relative;
+    z-index: 10;
+  }
+  .register-btn {
+    display: block;
+    margin: 30px auto;
+    padding: 7px 17px;
+    font-size: 1.1rem;
+    border-radius: 1px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    background: var(--btn-color);
+    color: white;
+    border: none;
+  }
+  .register-btn:hover {
+    transition: background 0.5s;
+    background: #ba833a;
+  }
+  .register-link {
+    color: white;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    font-family: sans-serif;
+  }
+  .register-link:hover {
+    color: rgb(197, 197, 197);
+    text-decoration: none;
+  }
+  @media (max-width: 450px) {
+    .form-label {
+        margin-bottom: 5px;
+        position: relative;
+        top: 2px;
+        z-index: 1;
+    }
+    .register-field {
+        height: 40px;
+    }
+  }
+
+  /* Alert CSS */
+  .alert {
+    background: rgb(255, 78, 78);
+    border-radius: 7px 7px 0 0;
+    position: absolute;
+    width: 100%;
+    padding: 0;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+  .error-message {
+    text-align: center;
+    padding: 12px 3px;
+    margin: 0;
+    position: relative;
+    bottom: 3px;
+    font-size: 0.9rem;
+  }
+  .error-popup-animation {
+    animation-name: showErrorPopup;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+  }
+  .reverse-error-popup-animation {
+    animation-name: showErrorPopup;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    animation-duration: 0.7s;
+    animation-timing-function: ease;
+    animation-direction: reverse;
+  }
+  
+  @keyframes showErrorPopup {
+    0% {transform: translateY(100%) translateX(-50%) scaleY(0.4)}
+    100% {transform: translateY(0%) translateX(-50%) scaleY(1); margin-bottom: auto}
+  }
+  
+
+  @media (max-width: 550px) {
+    .alert {
+      top: 10px;
+    }
+    .error-message {
+      font-size: 0.9rem;
+      padding: 10px 3px 10px;
+    }
+  }
+  
+  @media (max-width: 450px) {
+    .alert {
+        top: 13px;
+    }
+    .error-message {
+      font-size: 0.7rem;
+    }
+  }
+
+/* End of Alert CSS */
+
+  
+  @media (max-width: 550px) {
+    .register-title {
+      font-size: 2.3rem;
+    }
+    .register-form {
+      width: 95%;
+    }
+    .register-field {
+      font-size: 1rem !important;
+    }
+  }
+
 
 @media (max-width: 950px) {
     .comment-section {
@@ -428,9 +588,6 @@ textarea {
     .login-h1 {
         margin: 3rem auto 2rem;
         font-size: 1.9rem;
-    }
-    .register-form {
-        width:75%;
     }
     .logout-btn {
         font-size: 16px;

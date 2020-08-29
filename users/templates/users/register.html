@@ -2,13 +2,36 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <h3 class='text-white text-center mt-4 p-2'>Create Account</h3>
-    <form method="POST">
+<div class='register-block'>
+    <h2 class='register-title'>Register</h2>
+    <form method="POST" class='register-form'>
         {% csrf_token %}
-        <div class='form-group mx-auto text-white register-form'>
-            {{ form|crispy }}
-            <button type='submit' class='btn btn-primary mx-auto publish-btn mb-3 mt-4 px-5'>Register</button>
-            <br>
+        <div class='form-field-container'>
+            <p class='form-label'>First Name:</p>
+            <input class='register-field first-name' type="text" name="first_name" placeholder="Enter first name here..." autocomplete='off'>
         </div>
+        <div class='form-field-container'>
+            <p class='form-label'>Last Name:</p>
+            <input class='register-field last-name' type="text" name="last_name" placeholder="Enter last name here..." autocomplete='off'>
+        </div>
+        <div class='form-field-container'>
+            <p class='form-label'>Username:</p>
+            <input class='register-field username' type="text" name="username" placeholder="Enter username here..." autocomplete='off'>
+        </div>
+        <div class='form-field-container'>
+            <p class='form-label'>Email:</p>
+            <input class='register-field email' type="text" name="email" placeholder="Enter email here..." autocomplete='off'>
+        </div>
+        <div class='form-field-container'>
+            <p class='form-label'>Password:</p>
+            <input class='register-field password' type="password" name="password" placeholder="Enter password here..." autocomplete='off'>
+        </div>
+        <div class='form-field-container'>
+            <p class='form-label'>Password Again:</p>
+            <input class='register-field password-confirm' type="password" name="password2" placeholder="Enter password again..." autocomplete='off'>
+        </div>
+        <button class='register-btn' type="submit">Register</button>
+        <a class='register-link' href="/login">Return To Login</a>
     </form>
+</div>
 {% endblock %}
