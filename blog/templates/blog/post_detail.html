@@ -17,7 +17,7 @@
       {% endif %}
       <h3 class="card-header text-white px-5 detail-post-header">{{ object.title|title }}</h3>
       <div class="card-body detail-card-body">
-        <h4 class="card-title text-muted">Written by: <a class='text-muted' href="{% url 'user-posts' post.author.username %}">{{ object.author.get_full_name }}</a></h4>
+        <h4 class="card-title text-muted">Written by: <a class='text-muted' href="{% url 'user-posts' post.author.username %}">{{ object.author.get_full_name|title }}</a></h4>
         <h6 class="card-subtitle text-muted mb-2">Last modified on {{post.last_modified|date:'F d, Y'}} at {{post.last_modified|date:'P'}}</h6>
         <form action="{% url 'save-post' post.id %}">
           <input type='hidden' name='url' value='{{request.path}}'>
@@ -25,19 +25,19 @@
         </form>
         <p class="card-text mt-3 mb-2 px-4">{{post.content}}</p>
       </div>
-      <div class="card-footer bg-light text-muted mt-1 p-2 px-5">
-        <h5 class='w-75 text-center pb-2 mb-0 mx-auto'>Comments</h5>
+      <div class="card-footer comment-footer bg-light text-muted mt-1 p-2 px-5">
+        <h5 class='w-75 text-center mt-2 pb-2 mb-0 mx-auto'>Comments</h5>
         <form action='{% url "add-comment" %}' class='form-group border-bottom mb-0 py-2 w-100 mx-auto'>
           <textarea type="text" name='comment' placeholder='Enter Comment...' class='form-control border comment-input'></textarea>
           <input type="hidden" name='post' value="{{ object.id }}" class='form-control'>
           <button type='submit' class='btn btn-outline-primary mt-2 comment-btn'>Comment</button>
         </form>
         {% for comment in comments %}
-          <div class='row no-gutters justify-content-center py-2 border-bottom w-100 comment-section mx-auto'>
-            <div class="col-sm-2 col-3 text-right">
+          <div class='row no-gutters justify-content-center d-flex py-2 border-bottom w-100 comment-section mx-auto'>
+            <div class="text-right d-inline-block">
               <img class='rounded-circle comment-img img-thumbnail' src='{{ comment.user.profile.image.url }}' alt='User Image'>
             </div>
-            <div class="col-sm-10 col-9 text-left my-auto comment">
+            <div class="text-left my-auto comment d-inline-block w-75">
               <small class='my-auto'>{{comment.user.first_name|title}} {{comment.user.last_name|title}} | {{comment.time_posted|date:'F d, Y'}}</small>
               <p class='my-auto pr-5'>{{ comment.comment }}</p>
               {% if user == comment.user %}

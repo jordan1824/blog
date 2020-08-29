@@ -3,23 +3,27 @@
 {% block content %}
     {% if view.kwargs.username != user.username %}
         <div class='row no-gutters my-2 text-white pb-5 pt-4 text-center justify-content-center border-bottom border-light'>
-            <div class='col-lg-2 col-md-3 my-auto mx-4'>
-                <img src="{{ object_list.first.author.profile.image.url }}" alt="User Image" class='rounded-circle img-thumbnail profile-image'>
-            </div>
-            <div class='col-md-3 py-3 my-auto text-md-left px-5 p-bottom px-md-0'>
-                <h3>{{ object_list.first.author.first_name|title }} {{ object_list.first.author.last_name|title }}</h3>
-                <p class='bio'>{{ object_list.first.author.profile.bio }}</p>
+            <div class='user-profile-container'>
+                <div class='profile-image-div my-auto mx-4'>
+                    <img src="{{ object_list.first.author.profile.image.url }}" alt="User Image" class='rounded-circle img-thumbnail profile-image'>
+                </div>
+                <div class='profile-bio-div py-3 my-auto text-md-left px-5 p-bottom px-md-0'>
+                    <h3>{{ object_list.first.author.first_name|title }} {{ object_list.first.author.last_name|title }}</h3>
+                    <p class='bio'>{{ object_list.first.author.profile.bio }}</p>
+                </div>
             </div>
         </div>
     {% else %}
         <div class='row no-gutters my-2 text-white pb-5 pt-4 text-center justify-content-center border-bottom border-light'>
-            <div class='col-lg-2 col-md-3 my-auto mx-4'>
-                <img src="{{ user.profile.image.url }}" alt="User Image" class='rounded-circle img-thumbnail profile-image'>
-            </div>
-            <div class='col-md-3 py-3 my-auto text-md-left px-5 p-bottom px-md-0'>
-                <h3>{{ user.first_name|title }} {{ user.last_name|title }}</h3>
-                <p class='bio'>{{ user.profile.bio }}</p>
-                <a href="{% url 'profile' %}">Edit Your Profile</a>
+            <div class='user-profile-container'>
+                <div class='profile-image-div my-auto mx-4'>
+                    <img src="{{ user.profile.image.url }}" alt="User Image" class='rounded-circle img-thumbnail profile-image'>
+                </div>
+                <div class='profile-bio-div py-3 my-auto text-md-left px-5 p-bottom px-md-0'>
+                    <h3>{{ user.first_name|title }} {{ user.last_name|title }}</h3>
+                    <p class='bio'>{{ user.profile.bio }}</p>
+                    <a href="{% url 'profile' %}">Edit Your Profile</a>
+                </div>
             </div>
         </div>
     {% endif %}

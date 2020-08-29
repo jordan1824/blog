@@ -22,7 +22,7 @@
               <a data-toggle="tooltip" data-placement="top" title="Saved Posts" href="{% url 'saved-posts' %}"><i class="fa fa-cubes mx-3"></i></a>
               <a data-toggle="tooltip" data-placement="top" title="Search" href='{% url "post-search" %}'><i class="fa fa-search mx-3"></i></a>
               <a class='text-light' data-toggle="tooltip" data-placement="top" title="Create Post" href='{% url "create-post" %}'><i class="fa fa-edit mx-3 middle-icon"></i></a>
-              <a data-toggle="tooltip" data-placement="top" title="View Your Posts" href='{% url "user-posts" user.username %}'><i class="fa fa-user mx-3"></i></a>
+              <a data-toggle="tooltip" data-placement="top" title="View Your Profile" href='{% url "user-posts" user.username %}'><i class="fa fa-user mx-3"></i></a>
               <a data-toggle="tooltip" data-placement="top" title="View Users" href='{% url "users-list" %}'><i class="fa fa-users mx-3"></i></a>
           </div>
             {% for post in object_list %}
@@ -66,19 +66,19 @@
             {% if is_paginated %}
                 <div class="pages text-center pb-5 pt-3">
                     {% if page_obj.has_previous %}
-                        <a class='btn btn-outline-primary' href="?page={{ 1 }}">First</a>
-                        <a class='btn btn-outline-primary' href="?page={{ page_obj.previous_page_number }}">Prev.</a>
+                        <a class='btn bottom-page-link btn-outline-primary' href="?page={{ 1 }}">First</a>
+                        <a class='btn bottom-page-link btn-outline-primary' href="?page={{ page_obj.previous_page_number }}">Prev.</a>
                     {% endif %}
                     {% for num in page_obj.paginator.page_range %}
                         {% if num == page_obj.number %}
                           <a class='btn btn-primary' href="?page={{ num }}">{{num}}</a>
                         {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                          <a class='btn btn-outline-primary' href="?page={{ num }}">{{num}}</a>
+                          <a class='btn bottom-page-link btn-outline-primary' href="?page={{ num }}">{{num}}</a>
                         {% endif %}
                     {% endfor %}
                     {% if page_obj.has_next %}
-                        <a class='btn btn-outline-primary' href="?page={{ page_obj.next_page_number }}">Next</a>
-                        <a class='btn btn-outline-primary' href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                        <a class='btn bottom-page-link btn-outline-primary' href="?page={{ page_obj.next_page_number }}">Next</a>
+                        <a class='btn bottom-page-link btn-outline-primary' href="?page={{ page_obj.paginator.num_pages }}">Last</a>
                     {% endif %}
                 </div>
             {% endif %}
