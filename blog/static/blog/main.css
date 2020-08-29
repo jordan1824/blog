@@ -18,6 +18,34 @@ small {
     white-space: pre-wrap;
 }
 
+.fade-away-animation {
+    animation-name: fadeAway;
+    animation-duration: .3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.slide-animation {
+    animation-name: slide;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeAway {
+    0% {}
+    100% {opacity: 0;}
+}
+
+@keyframes slide {
+    0% {}
+    100% {
+        height: 0;
+        overflow: hidden;
+        margin-top: -30px;
+    }
+}
+
 /*  ==== NAVBAR ====  */
 
 .navbar-brand {
@@ -53,6 +81,10 @@ small {
 .btn-group-vertical button:hover {
     background: #F7F7F7;
     color: #047afb;
+}
+.home-saved-posts {
+    max-height: 393px;
+    overflow-y: scroll;
 }
 .savedposts a {
     white-space: normal;

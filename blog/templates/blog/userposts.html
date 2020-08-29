@@ -19,6 +19,7 @@
             <div class='col-md-3 py-3 my-auto text-md-left px-5 p-bottom px-md-0'>
                 <h3>{{ user.first_name|title }} {{ user.last_name|title }}</h3>
                 <p class='bio'>{{ user.profile.bio }}</p>
+                <a href="{% url 'profile' %}">Edit Your Profile</a>
             </div>
         </div>
     {% endif %}
@@ -34,23 +35,25 @@
             {% for post in object_list %}
                 <div class="card mx-auto mb-4 text-center bg-light border home-post">
                   <div class="card-body">
-                    {% if post.author == user %}
                         <div class="dropdown home-post-dropdown">
                           <a class="btn bg-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             ...
                           </a>
                           <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="dropdownMenu1">
-                              <a class="dropdown-item" href="{% url 'update-post' post.id %}">Edit Post</a>
-                              <a class="dropdown-item" href="{% url 'delete-post' post.id %}">Delete Post</a>
+                            <a class="dropdown-item" href="{% url 'post-detail' post.id %}">View Post</a>
+                            <a class="dropdown-item" href="{% url 'post-detail' post.id %}">Comment</a>
+                            {% if post.author == user %}
+                                <a class="dropdown-item" href="{% url 'update-post' post.id %}">Edit Post</a>
+                                <a class="dropdown-item" href="{% url 'delete-post' post.id %}">Delete Post</a>
+                            {% endif %}
                           </div>
                         </div>
-                    {% endif %}
 
                     <h4 class="card-title text-dark">{{post.title}}</h4>
                     <h6 class="card-subtitle mb-2 text-muted">Last modified on {{post.last_modified|date:'F d, Y'}} at {{post.last_modified|date:'P'}}</h6>
                     <form action="{% url 'save-post' post.id %}">
                       <input type='hidden' name='url' value='{{request.path}}'>
-                      <button type=submit class="btn btn-link py-0 card-link">Save Post</button>
+                      <button type=submit data-id='{{ post.id }}' class="btn btn-link py-0 card-link save-post-link">Save Post</button>
                     </form>
                     <p class="card-text px-3 mt-2">{{post.content|truncatechars:250}}</p>
                     {% if post.content|length > 250 %}

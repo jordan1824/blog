@@ -21,16 +21,16 @@
         <h6 class="card-subtitle text-muted mb-2">Last modified on {{post.last_modified|date:'F d, Y'}} at {{post.last_modified|date:'P'}}</h6>
         <form action="{% url 'save-post' post.id %}">
           <input type='hidden' name='url' value='{{request.path}}'>
-          <button type=submit class="btn btn-link py-0 card-link">Save Post</button>
+          <button type=submit data-id='{{ post.id }}' class="btn btn-link py-0 card-link save-post-link">Save Post</button>
         </form>
         <p class="card-text mt-3 mb-2 px-4">{{post.content}}</p>
       </div>
       <div class="card-footer bg-light text-muted mt-1 p-2 px-5">
         <h5 class='w-75 text-center pb-2 mb-0 mx-auto'>Comments</h5>
         <form action='{% url "add-comment" %}' class='form-group border-bottom mb-0 py-2 w-100 mx-auto'>
-          <textarea type="text" name='comment' placeholder='Enter Comment...' class='form-control border'></textarea>
+          <textarea type="text" name='comment' placeholder='Enter Comment...' class='form-control border comment-input'></textarea>
           <input type="hidden" name='post' value="{{ object.id }}" class='form-control'>
-          <button type='submit' class='btn btn-outline-primary mt-2'>Comment</button>
+          <button type='submit' class='btn btn-outline-primary mt-2 comment-btn'>Comment</button>
         </form>
         {% for comment in comments %}
           <div class='row no-gutters justify-content-center py-2 border-bottom w-100 comment-section mx-auto'>

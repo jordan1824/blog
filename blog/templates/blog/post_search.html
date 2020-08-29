@@ -25,6 +25,7 @@
               </a>
               <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="dropdownMenu1">
                 <a class="dropdown-item" href="{% url 'post-detail' post.id %}">View Post</a>
+                <a class="dropdown-item" href="{% url 'post-detail' post.id %}">Comment</a>
                 {% if post.author == user %}
                   <a class="dropdown-item" href="{% url 'update-post' post.id %}">Edit Post</a>
                   <a class="dropdown-item" href="{% url 'delete-post' post.id %}">Delete Post</a>
@@ -36,7 +37,7 @@
             <h6 class="card-subtitle text-muted mb-1">Written by: <a class='text-muted' href="{% url 'user-posts' post.author.username %}">{{ post.author.get_full_name|title }}</a></h6>
             <form action="{% url 'save-post' post.id %}">
               <input type='hidden' name='url' value='{{request.path}}'>
-              <button type=submit class="btn btn-link py-0 card-link">Save Post</button>
+              <button type=submit data-id='{{ post.id }}' class="btn btn-link py-0 card-link save-post-link">Save Post</button>
             </form>
             <p class="card-text mt-2 px-5">{{post.content|truncatechars:200}}</p>
             {% if post.content|length > 200 %}

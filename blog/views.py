@@ -5,6 +5,7 @@ from .models import Post, SavedPost, PostComment
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
+from django.http import HttpResponse
 
 
 class PostListView(LoginRequiredMixin, ListView):
@@ -15,9 +16,12 @@ class PostListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        saved_posts = list(SavedPost.objects.filter(user=self.request.user).all().values('saved_post'))
+        saved_posts_list = list(map(lambda x: x["saved_post"], saved_posts))
         context["home"] = 'active'
         context["saved_posts"] = SavedPost.objects.filter(
             user=self.request.user).all().order_by('-time_added')
+        context["saved_posts_list"] = saved_posts_list
         return context
 
 
@@ -85,12 +89,12 @@ def post_save(request, pk):
     post = Post.objects.get(id=pk)
     current_user = request.user
     if SavedPost.objects.filter(user=current_user, saved_post=post).first():
-        messages.error(request, 'You already have that post saved.')
+        SavedPost.objects.filter(user=current_user, saved_post=post).delete()
+        return HttpResponse("Removed")
     else:
         new_save = SavedPost(user=current_user, saved_post=post)
         new_save.save()
-        messages.success(request, f'"{post.title}" Has Been Saved!')
-    return redirect(url)
+        return HttpResponse("Saved")
 
 
 class UsersListView(LoginRequiredMixin, ListView):
@@ -121,10 +125,9 @@ def remove_post(request, pk):
     current_user = request.user
     if SavedPost.objects.filter(user=current_user, saved_post=post).first():
         SavedPost.objects.filter(user=current_user, saved_post=post).delete()
-        messages.success(request, f'"{post.title}" Has Been Removed!')
+        return HttpResponse("Success")
     else:
-        messages.error(request, 'That post is not in your saved posts.')
-    return redirect('saved-posts')
+        return HttpResponse("Failure")
 
 
 def user_search(request):
