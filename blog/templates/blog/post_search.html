@@ -37,7 +37,11 @@
             <h6 class="card-subtitle text-muted mb-1">Written by: <a class='text-muted' href="{% url 'user-posts' post.author.username %}">{{ post.author.get_full_name|title }}</a></h6>
             <form action="{% url 'save-post' post.id %}">
               <input type='hidden' name='url' value='{{request.path}}'>
+              {% if post.id in saved_posts_list %}
+              <button type=submit data-id='{{ post.id }}' class="btn btn-link py-0 card-link save-post-link">Saved</button>
+              {% else %}
               <button type=submit data-id='{{ post.id }}' class="btn btn-link py-0 card-link save-post-link">Save Post</button>
+              {% endif %}
             </form>
             <p class="card-text mt-2 px-5">{{post.content|truncatechars:200}}</p>
             {% if post.content|length > 200 %}

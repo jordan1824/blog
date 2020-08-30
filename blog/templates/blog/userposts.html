@@ -57,7 +57,11 @@
                     <h6 class="card-subtitle mb-2 text-muted">Last modified on {{post.last_modified|date:'F d, Y'}} at {{post.last_modified|date:'P'}}</h6>
                     <form action="{% url 'save-post' post.id %}">
                       <input type='hidden' name='url' value='{{request.path}}'>
-                      <button type=submit data-id='{{ post.id }}' class="btn btn-link py-0 card-link save-post-link">Save Post</button>
+                      {% if post.id in saved_posts_list %}
+                        <button type=submit data-id='{{ post.id }}' class="btn btn-link py-0 card-link save-post-link">Saved</button>
+                        {% else %}
+                        <button type=submit data-id='{{ post.id }}' class="btn btn-link py-0 card-link save-post-link">Save Post</button>
+                        {% endif %}
                     </form>
                     <p class="card-text px-3 mt-2">{{post.content|truncatechars:250}}</p>
                     {% if post.content|length > 250 %}

@@ -16,12 +16,9 @@ class PostListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        saved_posts = list(SavedPost.objects.filter(user=self.request.user).all().values('saved_post'))
-        saved_posts_list = list(map(lambda x: x["saved_post"], saved_posts))
         context["home"] = 'active'
         context["saved_posts"] = SavedPost.objects.filter(
             user=self.request.user).all().order_by('-time_added')
-        context["saved_posts_list"] = saved_posts_list
         return context
 
 
@@ -109,7 +106,6 @@ class UsersListView(LoginRequiredMixin, ListView):
 class SavedPostListView(LoginRequiredMixin, ListView):
     model = SavedPost
     template_name = 'blog/saved_posts.html'
-    paginate_by = 10
 
     def get_queryset(self):
         return SavedPost.objects.filter(user=self.request.user).all().order_by('-time_added')

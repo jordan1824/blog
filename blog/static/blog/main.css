@@ -26,6 +26,7 @@ body {
 .alert-block ul li {
     font-size: 0.75rem;
     text-align: center;
+    transform: scale(1.1);
 }
 
 small {
