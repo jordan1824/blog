@@ -423,10 +423,9 @@ textarea {
   .register-block {
     max-width: 600px;
     width: 90%;
-    background: var(--primary-color);
     margin: 30px auto 40px;
-    padding: 0px 10px 60px;
-    border: 5px solid var(--border-color);
+    padding: 20px 10px 30px;
+    border: 1px solid var(--light-color);
     color: white;
   }
   .register-title {
@@ -468,7 +467,6 @@ textarea {
     border-radius: 1px;
     margin-bottom: 20px;
     cursor: pointer;
-    background: var(--btn-color);
     color: white;
     border: none;
   }
@@ -500,7 +498,8 @@ textarea {
   }
 
   /* Alert CSS */
-  .alert {
+
+  .form-alert {
     background: rgb(255, 78, 78);
     border-radius: 7px 7px 0 0;
     position: absolute;
@@ -542,7 +541,7 @@ textarea {
   
 
   @media (max-width: 550px) {
-    .alert {
+    .form-alert {
       top: 10px;
     }
     .error-message {
@@ -552,11 +551,11 @@ textarea {
   }
   
   @media (max-width: 450px) {
-    .alert {
+    .form-alert {
         top: 13px;
     }
     .error-message {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
     }
   }
 

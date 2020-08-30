@@ -98,12 +98,21 @@ if (document.querySelector(".comment-btn")) {
 class FormErrorMessage {
   constructor() {
     this.registerFormFields = document.querySelectorAll(".register-field")
+    this.registerForm = document.querySelector(".register-form")
+    // Counters to keep track of each alert
     this.usernameCounter = 0
     this.emailCounter = 0
     this.passwordCounter = 0
     this.passwordConfirmCounter = 0
     this.firstNameCounter = 0
     this.lastNameCounter = 0
+    // Error tracker for each field
+    this.usernameErrors = 0
+    this.emailErrors = 0
+    this.passwordErrors = 0
+    this.passwordConfirmErrors = 0
+    this.firstNameErrors = 0
+    this.lastNameErrors = 0
     if (this.registerFormFields) {this.events()}
   }
 
@@ -129,117 +138,132 @@ class FormErrorMessage {
         this.lastNameFieldHandler(field)
       }
     }))
+    this.registerForm.addEventListener("submit", (event) => {
+      // Prevents submission when fields are empty
+      this.registerFormFields.forEach(field => {
+        if (field.value.length == 0) {
+          event.preventDefault()
+        }
+      })
+      // Prevents submission when there are errors
+      let totalErrors = this.usernameErrors + this.emailErrors + this.passwordErrors + this.passwordConfirmErrors + this.firstNameErrors + this.lastNameErrors
+      if (totalErrors > 0) {
+        event.preventDefault()
+      }
+    })
   }
 
   // Models
 
   usernameFieldHandler(field) {
-    let errors = 0;
+    this.usernameErrors = 0;
     clearTimeout(this.usernameCounter)
-    if (field.value.length > 50) {errors = this.insertAlert(field, "Your username cannot exceed 50 characters.", errors)}
-    if (field.value.match(/[$&+,:;=?@#|'<>.^*()%!_-]+/)) {errors = this.insertAlert(field, "Your username cannot contain special characters.", errors)}
-    this.usernameTimedChecks(field, errors)
-    if (!errors) {
+    if (field.value.length > 50) {this.usernameErrors = this.insertAlert(field, "Your username cannot exceed 50 characters.", this.usernameErrors)}
+    if (field.value.match(/[$&+,:;=?@#|'<>.^*()%!_-]+/)) {this.usernameErrors = this.insertAlert(field, "Your username cannot contain special characters.", this.usernameErrors)}
+    this.usernameTimedChecks(field)
+    if (!this.usernameErrors) {
       this.removeAlert(field)
     }
   }
 
-  usernameTimedChecks(field, errors) {
+  usernameTimedChecks(field) {
     if (field.value.length > 0 && field.value.length < 4) {
-      this.usernameCounter = setTimeout(() => errors = this.insertAlert(field, "Your username must be atleast 4 characters long.", errors), 2000)
+      this.usernameCounter = setTimeout(() => this.usernameErrors = this.insertAlert(field, "Your username must be atleast 4 characters long.", this.usernameErrors), 1500)
     }
     if (field.value.length == 0) {
-      this.usernameCounter = setTimeout(() => errors = this.insertAlert(field, "You must enter a valid username.", errors), 2000)
+      this.usernameCounter = setTimeout(() => this.usernameErrors = this.insertAlert(field, "You must enter a valid username.", this.usernameErrors), 1500)
     }
   }
 
   emailFieldHandler(field) {
-    let errors = 0;
+    this.emailErrors = 0;
     clearTimeout(this.emailCounter)
-    if (field.value.length > 200) {errors = this.insertAlert(field, "Your email cannot exceed 200 characters.", errors)}
-    this.emailTimedChecks(field, errors)
-    if (!errors) {
+    if (field.value.length > 200) {this.emailErrors = this.insertAlert(field, "Your email cannot exceed 200 characters.", this.emailErrors)}
+    this.emailTimedChecks(field)
+    if (!this.emailErrors) {
       this.removeAlert(field)
     }
   }
 
-  emailTimedChecks(field, errors) {
+  emailTimedChecks(field) {
     if (!field.value.match(/[A-Za-z0-9]+@[a-zA-Z]+\.[a-zA-Z]+/)) {
-      this.emailCounter = setTimeout(() => errors = this.insertAlert(field, "You must provide a valid email address.", errors), 3000)
+      this.emailCounter = setTimeout(() => this.emailErrors = this.insertAlert(field, "You must provide a valid email address.", this.emailErrors), 1500)
     }
   }
 
   passwordFieldHandler(field) {
-    let errors = 0;
+    this.passwordErrors = 0;
     clearTimeout(this.passwordCounter)
-    if (field.value.length > 50) {errors = this.insertAlert(field, "Your password cannot exceed 50 characters.", errors)}
-    this.passwordTimedChecks(field, errors)
-    if (!errors) {
+    if (field.value.length > 50) {this.passwordErrors = this.insertAlert(field, "Your password cannot exceed 50 characters.", this.passwordErrors)}
+    this.passwordTimedChecks(field)
+    if (!this.passwordErrors) {
       this.removeAlert(field)
     }
   }
 
-  passwordTimedChecks(field, errors) {
+  passwordTimedChecks(field) {
     if (field.value.length > 0 && field.value.length < 8) {
-      this.passwordCounter = setTimeout(() => errors = this.insertAlert(field, "Your password must be atleast 8 characters long.", errors), 2000)
+      this.passwordCounter = setTimeout(() => this.passwordErrors = this.insertAlert(field, "Your password must be atleast 8 characters long.", this.passwordErrors), 1500)
     }
     if (field.value.length == 0) {
-      this.passwordCounter = setTimeout(() => errors = this.insertAlert(field, "You must enter a valid password.", errors), 2000)
+      this.passwordCounter = setTimeout(() => this.passwordErrors = this.insertAlert(field, "You must enter a valid password.", this.passwordErrors), 1500)
     }
   }
 
   passwordConfirmFieldHandler(field) {
-    let errors = 0;
+    this.passwordConfirmErrors = 0;
     clearTimeout(this.passwordConfirmCounter)
-    this.passwordConfirmTimedChecks(field, errors)
-    if (!errors) {
+    this.passwordConfirmTimedChecks(field)
+    if (!this.passwordConfirmErrors) {
       this.removeAlert(field)
     }
   }
 
-  passwordConfirmTimedChecks(field, errors) {
+  passwordConfirmTimedChecks(field) {
     if (field.value != document.querySelector(".password").value) {
-      this.passwordConfirmCounter = setTimeout(() => errors = this.insertAlert(field, "Your passwords do not match.", errors), 2000)
+      this.passwordConfirmCounter = setTimeout(() => this.passwordConfirmErrors = this.insertAlert(field, "Your passwords do not match.", this.passwordConfirmErrors), 1500)
     }
   }
 
   firstNameFieldHandler(field) {
-    let errors = 0;
+    this.firstNameErrors = 0;
     clearTimeout(this.firstNameCounter)
-    if (field.value.length > 250) {errors = this.insertAlert(field, "Your first name cannot exceed 250 characters.", errors)}
-    this.firstNameTimedChecks(field, errors)
-    if (!errors) {
+    if (field.value.length > 250) {this.firstNameErrors = this.insertAlert(field, "Your first name cannot exceed 250 characters.", this.firstNameErrors)}
+    if (field.value.match(/[$&+,:;=?@#|<>.^*()%!_-]+/)) {this.firstNameErrors = this.insertAlert(field, "Your first name cannot contain special characters.", this.firstNameErrors)}
+    this.firstNameTimedChecks(field)
+    if (!this.firstNameErrors) {
       this.removeAlert(field)
     }
   }
 
-  firstNameTimedChecks(field, errors) {
+  firstNameTimedChecks(field) {
     if (field.value.length == 0) {
-      this.firstNameCounter = setTimeout(() => errors = this.insertAlert(field, "You must enter a valid first name.", errors), 2000)
+      this.firstNameCounter = setTimeout(() => this.firstNameErrors = this.insertAlert(field, "You must enter a valid first name.", this.firstNameErrors), 1500)
     }
   }
 
   lastNameFieldHandler(field) {
-    let errors = 0;
+    this.lastNameErrors = 0;
     clearTimeout(this.lastNameCounter)
-    if (field.value.length > 250) {errors = this.insertAlert(field, "Your last name cannot exceed 250 characters.", errors)}
-    this.lastNameTimedChecks(field, errors)
-    if (!errors) {
+    if (field.value.length > 250) {this.lastNameErrors = this.insertAlert(field, "Your name cannot exceed 250 characters.", this.lastNameErrors)}
+    if (field.value.match(/[$&+,:;=?@#|<>.^*()%!_-]+/)) {this.lastNameErrors = this.insertAlert(field, "Your name cannot contain special characters.", this.lastNameErrors)}
+    this.lastNameTimedChecks(field)
+    if (!this.lastNameErrors) {
       this.removeAlert(field)
     }
   }
 
-  lastNameTimedChecks(field, errors) {
+  lastNameTimedChecks(field) {
     if (field.value.length == 0) {
-      this.lastNameCounter = setTimeout(() => errors = this.insertAlert(field, "You must enter a valid last name.", errors), 2000)
+      this.lastNameCounter = setTimeout(() => this.lastNameErrors = this.insertAlert(field, "You must enter a valid last name.", this.lastNameErrors), 1500)
     }
   }
 
   insertAlert(field, message, errors) {
     errors += 1;
-    if (!field.parentElement.querySelector(".alert")) {
+    if (!field.parentElement.querySelector(".form-alert")) {
       field.parentElement.insertAdjacentHTML("afterbegin", this.alertHTML(message))
-      field.parentElement.querySelector(".alert").addEventListener("animationend", function() {
+      field.parentElement.querySelector(".form-alert").addEventListener("animationend", function() {
         this.classList.remove("error-popup-animation")
     })
     }
@@ -247,14 +271,14 @@ class FormErrorMessage {
   }
 
   alertHTML(error) {
-    return `<div class='alert error-popup-animation'>
+    return `<div class='form-alert error-popup-animation'>
       <p class='error-message'>${error}</p>
     </div>`
   }
 
   removeAlert(field) {
-    if (field.parentElement.querySelector(".alert")) {
-      let currentFieldAlert = field.parentElement.querySelector(".alert")
+    if (field.parentElement.querySelector(".form-alert")) {
+      let currentFieldAlert = field.parentElement.querySelector(".form-alert")
       currentFieldAlert.classList.add("reverse-error-popup-animation")
       currentFieldAlert.addEventListener("animationend", function() {
         currentFieldAlert.remove()
