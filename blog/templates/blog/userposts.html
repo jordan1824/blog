@@ -53,7 +53,7 @@
                           </div>
                         </div>
 
-                    <h4 class="card-title text-dark">{{post.title}}</h4>
+                    <h4 class="card-title text-dark">{{post.title|title}}</h4>
                     <h6 class="card-subtitle mb-2 text-muted">Last modified on {{post.last_modified|date:'F d, Y'}} at {{post.last_modified|date:'P'}}</h6>
                     <form action="{% url 'save-post' post.id %}">
                       <input type='hidden' name='url' value='{{request.path}}'>

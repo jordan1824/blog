@@ -11,7 +11,7 @@
               <div class='p-3 save-btn-list'><h5 class='mb-0'>Saved Posts</h5></div>
             {% endif %}
               {% for save in saved_posts %}
-                <a type='button' data-id='{{ save.saved_post.id }}' href="{% url 'post-detail' save.saved_post.id %}" class='btn btn-primary border border-dark'>{{save.saved_post.title}}</a>
+                <a type='button' data-id='{{ save.saved_post.id }}' href="{% url 'post-detail' save.saved_post.id %}" class='btn btn-primary border border-dark'>{{save.saved_post.title|title}}</a>
               {% empty %}
                 <p class='text-dark bg-light mt-1 mb-0 p-2'>You do not have any saved posts.<br><br>Saved posts will get stored here, so you can read through them when you have the time.</p>
               {% endfor %}

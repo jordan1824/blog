@@ -96,6 +96,13 @@ small {
 
 /*  ==== INDEX ====  */
 
+/* Reset Password Pages */
+
+.password-reset-form {
+    width: 90%;
+    max-width: 450px;
+}
+
 /* Button Sidebar */
 .btn-group-vertical {
     margin: 0 auto;
@@ -436,6 +443,17 @@ textarea {
     padding: 10px;
     margin-bottom: 0px;
   }
+  .field-hidden {
+      opacity: 0;
+      height: 0;
+      overflow: hidden;
+  }
+  .field-visible {
+    transition: opacity 1s;
+    opacity: 1;
+    height: auto;
+    overflow: auto;
+  }
   .register-form {
     width: 80%;
     margin: auto;
@@ -486,6 +504,7 @@ textarea {
     color: rgb(197, 197, 197);
     text-decoration: none;
   }
+
   @media (max-width: 450px) {
     .form-label {
         margin-bottom: 5px;
@@ -559,7 +578,6 @@ textarea {
       font-size: 0.65rem;
     }
   }
-
 /* End of Alert CSS */
 
   

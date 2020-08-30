@@ -156,6 +156,11 @@ class FormErrorMessage {
   // Models
 
   usernameFieldHandler(field) {
+    if (!document.querySelector(".field-visible")) {
+      document.querySelectorAll(".field-hidden").forEach(hiddenField => {
+        hiddenField.classList.add("field-visible")
+      })
+    }
     this.usernameErrors = 0;
     clearTimeout(this.usernameCounter)
     if (field.value.length > 50) {this.usernameErrors = this.insertAlert(field, "Your username cannot exceed 50 characters.", this.usernameErrors)}
@@ -168,7 +173,7 @@ class FormErrorMessage {
 
   usernameTimedChecks(field) {
     if (field.value.length > 0 && field.value.length < 4) {
-      this.usernameCounter = setTimeout(() => this.usernameErrors = this.insertAlert(field, "Your username must be atleast 4 characters long.", this.usernameErrors), 1500)
+      this.usernameCounter = setTimeout(() => this.usernameErrors = this.insertAlert(field, "Your username must be at least 4 characters long.", this.usernameErrors), 1500)
     }
     if (field.value.length == 0) {
       this.usernameCounter = setTimeout(() => this.usernameErrors = this.insertAlert(field, "You must enter a valid username.", this.usernameErrors), 1500)
@@ -203,7 +208,7 @@ class FormErrorMessage {
 
   passwordTimedChecks(field) {
     if (field.value.length > 0 && field.value.length < 8) {
-      this.passwordCounter = setTimeout(() => this.passwordErrors = this.insertAlert(field, "Your password must be atleast 8 characters long.", this.passwordErrors), 1500)
+      this.passwordCounter = setTimeout(() => this.passwordErrors = this.insertAlert(field, "Your password must be at least 8 characters long.", this.passwordErrors), 1500)
     }
     if (field.value.length == 0) {
       this.passwordCounter = setTimeout(() => this.passwordErrors = this.insertAlert(field, "You must enter a valid password.", this.passwordErrors), 1500)

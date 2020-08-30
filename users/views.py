@@ -59,9 +59,9 @@ def register(request):
         quickCheck(password, 50, "password")
         # Other important validation checks
         if 0 < len(username) < 4:
-            errors.append("Your username must be atleast 4 characters long.")
+            errors.append("Your username must be at least 4 characters long.")
         if 0 < len(password) < 8:
-            errors.append("Your password must be atleast 8 characters long.")
+            errors.append("Your password must be at least 8 characters long.")
         if len(email) > 200:
             errors.append("Your email cannot exceed 200 characters.")
         if not(re.match("[A-Za-z0-9]+@[a-zA-Z]+\.[a-zA-Z]+", email)):
