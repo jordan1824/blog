@@ -156,10 +156,8 @@ class FormErrorMessage {
   // Models
 
   usernameFieldHandler(field) {
-    if (!document.querySelector(".field-visible")) {
-      document.querySelectorAll(".field-hidden").forEach(hiddenField => {
-        hiddenField.classList.add("field-visible")
-      })
+    if (!document.querySelector("#email-field").classList.contains("field-visible")) {
+      document.querySelector("#email-field").classList.add("field-visible")
     }
     this.usernameErrors = 0;
     clearTimeout(this.usernameCounter)
@@ -181,6 +179,9 @@ class FormErrorMessage {
   }
 
   emailFieldHandler(field) {
+    if (!document.querySelector("#password-field").classList.contains("field-visible")) {
+      document.querySelector("#password-field").classList.add("field-visible")
+    }
     this.emailErrors = 0;
     clearTimeout(this.emailCounter)
     if (field.value.length > 200) {this.emailErrors = this.insertAlert(field, "Your email cannot exceed 200 characters.", this.emailErrors)}
@@ -197,6 +198,9 @@ class FormErrorMessage {
   }
 
   passwordFieldHandler(field) {
+    if (!document.querySelector("#confirm-password-field").classList.contains("field-visible")) {
+      document.querySelector("#confirm-password-field").classList.add("field-visible")
+    }
     this.passwordErrors = 0;
     clearTimeout(this.passwordCounter)
     if (field.value.length > 50) {this.passwordErrors = this.insertAlert(field, "Your password cannot exceed 50 characters.", this.passwordErrors)}
