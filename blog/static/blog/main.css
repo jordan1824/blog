@@ -432,9 +432,8 @@ textarea {
   .register-block {
     max-width: 600px;
     width: 90%;
-    margin: 30px auto 40px;
-    padding: 20px 10px 30px;
-    border: 1px solid var(--light-color);
+    margin: 30px auto 10px;
+    padding: 20px 10px 5px;
     color: white;
   }
   .register-title {
