@@ -25,7 +25,6 @@ let removePost = function(btnElement) {
 
 let insertCurrentEl = function(postID, postTitle) {
   let listLink = document.createElement('a')
-  listLink.setAttribute('type', 'button')
   listLink.setAttribute('data-id', `${postID}`)
   listLink.setAttribute('href', `post/${postID}`)
   listLink.className = 'btn btn-primary border border-dark'

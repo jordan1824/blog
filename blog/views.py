@@ -40,6 +40,11 @@ class UserPostListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return Post.objects.filter(author=user).order_by('-last_modified').all()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["profile"] = 'active'
+        return context
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
