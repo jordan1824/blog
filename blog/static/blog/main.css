@@ -704,3 +704,12 @@ textarea {
         padding: 5px 8px !important;
     }
 }
+
+/* Remove Scrollbar */
+.home-saved-posts::-webkit-scrollbar {
+    display: none;
+}
+.home-saved-posts {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
